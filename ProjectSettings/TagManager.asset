@@ -8,6 +8,7 @@ TagManager:
   - MapRessource
   - Entry
   - Terrain
+  - Building
   layers:
   - Default
   - TransparentFX
