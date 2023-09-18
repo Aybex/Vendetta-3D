@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ClicEffect
   - MapRessource
+  - Entry
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Terrain
   - Water
   - UI
-  - 
+  - Interactable
   - 
   - 
   - 
