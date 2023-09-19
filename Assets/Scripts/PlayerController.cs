@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     //Annimations
     const string Idle = "idle1";
     const string Run = "Run";
+    const string Mine = "Attack1";
 
     public struct Tags
     {
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     LayerMask clickableLayers;
     float lookRotationSpeed = 8f;
 
+    bool isMinning = false;
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out var hit, 100, clickableLayers))
         {
             Vector3 destination = hit.point;
+            //   Debug.Log("Clicked on " + hit.collider.gameObject.name + " : " + hit.collider.tag);
             //Set destination as the position of child with tag "Entry"
             if (hit.collider.CompareTag(Tags.Ressource) || hit.collider.CompareTag(Tags.Building))
             {
@@ -74,6 +77,7 @@ public class PlayerController : MonoBehaviour
         if (clickEffect != null)
             Instantiate(clickEffect, hit.point += new Vector3(0, 0.1f, 0), clickEffect.transform.rotation);
 
+        isMinning = false;
     }
 
     void Update()
@@ -90,18 +94,19 @@ public class PlayerController : MonoBehaviour
         if (!arrived && (HasArrived(Tags.Ressource) || HasArrived(Tags.Building)))
         {
 
-            Debug.Log("Arrived at ressource, rotating ...");
-            //TODO : Play annimation
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.AngleAxis(0, Vector3.forward), Time.deltaTime * lookRotationSpeed);
 
+                isMinning = true;
             //Check if rotation is done :
             if (Quaternion.Angle(transform.rotation, Quaternion.AngleAxis(0, Vector3.forward)) < Mathf.Epsilon)
+            {
                 arrived = true;
+            }
 
         }
 
         //Set annimation :
-        animator.Play(IsMoving() ? Run : Idle);
+        animator.Play(isMinning ? Mine : (IsMoving() ? Run : Idle));
     }
 
     private bool IsMoving() => agent.velocity.sqrMagnitude > Mathf.Epsilon;
@@ -111,12 +116,7 @@ public class PlayerController : MonoBehaviour
         return HasArrived() && destinationTag == destination;
     }
 
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Triggered by " + other.gameObject.name);
-    }
-    */
+
     void OnEnable()
     {
         input.Enable();
