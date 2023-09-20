@@ -302,9 +302,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60bcb0919518b9a4a9916b95501593d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _terrainObject: {fileID: 185282688}
-  _ressourcePrefab: {fileID: 5647022455621337994, guid: f0ac50bca91c36d4dba945953721b09d, type: 3}
-  _ressourceCount: 100
+  terrain: {fileID: 185282685}
+  maxRessourcesCount: 100
+  ressourcesPrefabs:
+  - {fileID: 1000159264054250816, guid: f0ac50bca91c36d4dba945953721b09d, type: 3}
+  - {fileID: 3368798886443888705, guid: 855bf9d4e7c34c146bcd870a514d1700, type: 3}
 --- !u!1 &385898269
 GameObject:
   m_ObjectHideFlags: 0

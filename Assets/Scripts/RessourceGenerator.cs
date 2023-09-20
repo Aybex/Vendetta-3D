@@ -1,64 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class RessourceGenerator : MonoBehaviour
 {
-    [SerializeField] private Transform _terrainObject;
-    [SerializeField] private GameObject _ressourcePrefab;
-    [SerializeField] private int _ressourceCount;
+	[SerializeField] private Collider terrain;
+	[SerializeField] private int maxRessourcesCount;
 
-    List<GameObject> Ressources = new();
+	[Header("Ressource prefabs")]
+	[SerializeField] private List<Ressource> ressourcesPrefabs = new();
 
-    void Awake()
-    {
-        var terrain = _terrainObject.GetComponent<Collider>();
-        var surface = _terrainObject.GetComponent<NavMeshSurface>();
+    List<Ressource> Ressources = new List<Ressource>();
 
-        //test object for bounds :
-        var ressourceSize = Instantiate(_ressourcePrefab, new(0, -100, 0), Quaternion.identity, this.transform).GetComponent<Collider>().bounds.size;
-        
-        //terrain bounds shrinked by ressource size :
-        var terrainBounds = terrain.bounds;
-        terrainBounds.Expand(-1.5f*ressourceSize);
+	void Start()
+	{
+        var surface = terrain.GetComponent<NavMeshSurface>();
 
-        int attempts = 0;
-        for (int i = 0; i < _ressourceCount; i++)
-        {
-            Vector3 randomPosition = Vector3.zero;
-            bool isValid = false;
-            while (!isValid)
+		int i = 0;
+		while (Ressources.Count < maxRessourcesCount)
+		{
+			//Choose a random ressource from prefabs
+			Ressource randomRessource = ressourcesPrefabs[Random.Range(0, ressourcesPrefabs.Count)];
+
+            float x_min = terrain.bounds.min.x + randomRessource.MeshBounds.size.x;
+			float x_max = terrain.bounds.max.x - randomRessource.MeshBounds.size.x;
+			float z_min = terrain.bounds.min.z + randomRessource.MeshBounds.size.z;
+			float z_max = terrain.bounds.max.z - randomRessource.MeshBounds.size.z;
+			Vector3 randomPosition = new Vector3(Random.Range(x_min, x_max), terrain.transform.position.y, Random.Range(z_min, z_max));
+            
+			Bounds newBounds = new Bounds(randomPosition, randomRessource.MeshBounds.size);
+
+			//Check if the new ressource intersects with an existing one
+            bool intersects = false;
+            foreach (var existingRessource in Ressources)
             {
-                isValid = true;
-                attempts++;
-                randomPosition = new Vector3(Random.Range(terrainBounds.min.x, terrainBounds.max.x), _terrainObject.position.y, Random.Range(terrainBounds.min.z, terrainBounds.max.z));
-                Bounds newBounds = new Bounds(randomPosition, ressourceSize);
-                
-                foreach (var existingRessource in Ressources)
+                if (existingRessource.MeshBounds.Intersects(newBounds))
                 {
-                    if (existingRessource != null &&
-                        existingRessource.GetComponent<Collider>().bounds.Intersects(newBounds))
-                    {
-                        isValid = false;
-                        break;
-                    }
+                    intersects = true;
+                    break;
                 }
             }
-            var r = Instantiate(_ressourcePrefab, randomPosition, Quaternion.identity, this.transform);
 
+			i++;
 
-            Ressources.Add(r);
-        }
-        surface.RemoveData();
-        surface.BuildNavMesh();
+            if (intersects)
+            {
+				continue;
+            }
 
+			var r = Instantiate(randomRessource.gameObject, randomPosition, Quaternion.identity, this.transform);
+			var ressource = r.GetComponent<Ressource>();
 
-    }
+			Ressources.Add(ressource);
+			if (i > 10000)
+			{
+				Debug.LogError("Too many iterations");
+				break;
+			}
+		}
+		Debug.Log("Ressources count : " + Ressources.Count);
+		Debug.Log("Iterations : " + i);
 
-    void Update()
-    {
+		surface.RemoveData();
+		surface.BuildNavMesh();
+	}
 
-    }
+	void Update()
+	{
+
+	}
 }
