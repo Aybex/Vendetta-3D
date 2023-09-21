@@ -6,9 +6,18 @@
             "id": "a25c827e-f5b1-4634-899c-c1cfd96bf23f",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "RightClick",
                     "type": "Button",
                     "id": "f1dede40-8d33-4614-9a45-54c15159f46c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Space",
+                    "type": "Button",
+                    "id": "3878964d-e5ec-43fe-b725-0225a8716157",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -23,7 +32,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce812e6f-1215-4e9a-ac6b-f97d9d818eea",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Space",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
