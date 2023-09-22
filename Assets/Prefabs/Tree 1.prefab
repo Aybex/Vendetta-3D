@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 841715236287303207}
   - component: {fileID: 3546160841952788913}
   - component: {fileID: 3368798886443888705}
-  - component: {fileID: 7278266759879505105}
   m_Layer: 6
   m_Name: Tree 1
   m_TagString: MapRessource
@@ -163,19 +162,6 @@ MonoBehaviour:
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
 --- !u!114 &3368798886443888705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4601883337946464946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a2bf76bc3f6302459c564cec99ff66f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: Tree
---- !u!114 &7278266759879505105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

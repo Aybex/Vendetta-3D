@@ -510,7 +510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4666283878823798, guid: 0c6d87199f687400184146c841adf2bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.81
+      value: -15.42
       objectReference: {fileID: 0}
     - target: {fileID: 4666283878823798, guid: 0c6d87199f687400184146c841adf2bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -591,6 +591,7 @@ MonoBehaviour:
   clickableLayers:
     serializedVersion: 2
     m_Bits: 72
+  inventory: {fileID: 11400000, guid: 780d9a010572cba40a88a1ffadb7a911, type: 2}
 --- !u!195 &672139486
 NavMeshAgent:
   m_ObjectHideFlags: 0

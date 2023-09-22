@@ -5,10 +5,10 @@ using UnityEngine;
 public class Ressource : MonoBehaviour
 {
     [SerializeField]
-    private string type;
+    private RessourceType type;
 
     private Bounds? meshBounds = null;
-    public string Type => type;
+    public RessourceType Type => type;
 
     public Bounds MeshBounds
     {
